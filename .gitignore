@@ -1,0 +1,6 @@
+# Ignorar carpetas de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar dependencias (cuando uses herramientas más avanzadas)
+node_modules/
