@@ -1,7 +1,13 @@
-let stock = 30;
-let continuar = true; 
-let comprados = 0;
+//Funcion de inicio
+function iniciarPrograma() {
+    let stock = 30;
+    let continuar = true;
+    let comprados = 0;
 
+    mientrasStock(stock, continuar, comprados);
+}
+
+//Menu de opciones
 const mostrarMenu = () => {
     return parseInt(prompt(
         "Menu\n" +
@@ -13,7 +19,8 @@ const mostrarMenu = () => {
     ));
 }
 
-function comprarProducto() {
+//Comprar productos
+function comprarProducto(stock, comprados) {
     let cantidad = parseInt(prompt("Ingresar la cantidad de productos que desea comprar:"));
 
     if (cantidad > 0 && cantidad <= stock) {
@@ -23,31 +30,39 @@ function comprarProducto() {
     } else {
         alert("No hay suficiente stock.");
     }
+    return [stock, comprados];
 }
 
-function consultarStock() {
+//Consultar stock
+function consultarStock(stock) {
     alert("Quedan en stock " + stock + " productos.");
 }
 
-function verComprados() {
+//Ver productos comprados
+function verComprados(comprados) {
     alert("Usted tiene en el carrito: " + comprados + " productos.");
 }
 
-while (stock > 0 && continuar){
+//Funcion principal
+function mientrasStock(stock, continuar, comprados) {
+
+    while (stock > 0 && continuar){
 
     let opcion = mostrarMenu();
 
     switch (opcion){
         case 1:
-            comprarProducto();
+            let resultado = comprarProducto(stock, comprados);
+            stock = resultado[0];
+            comprados = resultado[1];
         break;
 
         case 2:
-            consultarStock();
+            consultarStock(stock);
         break;
 
         case 3:
-            verComprados();
+            verComprados(comprados);
         break;
 
         case 4:
@@ -58,6 +73,8 @@ while (stock > 0 && continuar){
         default:
             alert("Opcion invalida.");
         break;
-        
+        }
     }
 }
+
+iniciarPrograma();
