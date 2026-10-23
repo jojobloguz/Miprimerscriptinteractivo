@@ -1,10 +1,10 @@
 //Funcion de inicio
 function iniciarPrograma() {
-    let stock = 30;
+    const productosEnStock = ["Remera", "Pantalon", "Zapatillas", "Campera", "Buzo"];
     let continuar = true;
-    let comprados = 0;
+    let comprados = [];
 
-    mientrasStock(stock, continuar, comprados);
+    mientrasStock(productosEnStock, continuar, comprados);
 }
 
 //Menu de opciones
@@ -14,51 +14,75 @@ const mostrarMenu = () => {
         "1. Comprar productos\n" +
         "2. Consultar stock\n" +
         "3. Ver productos comprados\n" +
-        "4. Salir\n\n" +
+        "4. Eliminar ultimo producto comprado\n" +
+        "5. Salir\n\n" +
         "Ingrese una opcion:"
     ));
 }
 
 //Comprar productos
-function comprarProducto(stock, comprados) {
-    let cantidad = parseInt(prompt("Ingresar la cantidad de productos que desea comprar:"));
-
-    if (cantidad > 0 && cantidad <= stock) {
-        stock = stock - cantidad;
-        comprados = comprados + cantidad;
-        alert("Compra realizada.");
-    } else {
-        alert("No hay suficiente stock.");
+function comprarProducto(productosEnStock, comprados) {
+    let buscado = prompt("¿Que producto desea comprar?")
+    if (productosEnStock.includes(buscado)){
+        const posicion = (productosEnStock.indexOf(buscado));
+        let productoComprado = productosEnStock.splice(posicion, 1)[0];
+        comprados.push(productoComprado);
+        alert(`Compraste: ${productoComprado}`)
+    }   else{
+        alert('El producto no se encuentra en stock o esta agotado.')
     }
-    return [stock, comprados];
 }
 
 //Consultar stock
-function consultarStock(stock) {
-    alert("Quedan en stock " + stock + " productos.");
+function consultarStock(productosEnStock) {
+    if (productosEnStock.length === 0){
+        alert("No quedan productos en stock.");
+        return;
+    }
+    let mensaje = "Productos Disponibles:\n";
+    for(productos of productosEnStock){
+        mensaje += `-${productos}\n`
+    }
+    alert(mensaje);
 }
 
 //Ver productos comprados
 function verComprados(comprados) {
-    alert("Usted tiene en el carrito: " + comprados + " productos.");
+    if(comprados.length === 0){
+        alert("Tu carrito esta vacio.");
+        return;
+    }
+    let mensaje = "Tu carrito contiene:\n"
+    for(productos of comprados){
+        mensaje += `-${productos}\n`
+    }
+    alert(mensaje)
 }
 
-//Funcion principal
-function mientrasStock(stock, continuar, comprados) {
+//Eliminar ultimo producto
+function eliminarUltimoProducto(comprados) {
+    if(comprados.length === 0){
+        alert("Tu carrito esta vacio.")
+        return;
+    }
+    let eliminado = comprados.pop();
+        alert(`Eliminaste: ${eliminado}`)
+}   
 
-    while (stock > 0 && continuar){
+//Funcion principal
+function mientrasStock(productosEnStock, continuar, comprados) {
+
+    while (productosEnStock.length > 0 && continuar){
 
     let opcion = mostrarMenu();
 
     switch (opcion){
         case 1:
-            let resultado = comprarProducto(stock, comprados);
-            stock = resultado[0];
-            comprados = resultado[1];
+            comprarProducto(productosEnStock, comprados);
         break;
 
         case 2:
-            consultarStock(stock);
+            consultarStock(productosEnStock);
         break;
 
         case 3:
@@ -66,6 +90,10 @@ function mientrasStock(stock, continuar, comprados) {
         break;
 
         case 4:
+            eliminarUltimoProducto(comprados);
+        break;
+
+        case 5:
             continuar = false;
             alert("Gracias por su compra.")
         break;
@@ -75,6 +103,10 @@ function mientrasStock(stock, continuar, comprados) {
         break;
         }
     }
+    if (productosEnStock.lenght === 0){
+        alert("Se agotaron los productos.")
+    }
 }
 
 iniciarPrograma();
+
