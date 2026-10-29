@@ -1,10 +1,32 @@
 //Funcion de inicio
 function iniciarPrograma() {
-    const productosEnStock = ["Remera", "Pantalon", "Zapatillas", "Campera", "Buzo"];
+    const productosEnStock = [
+        new Producto ("Remera",10000,"indumentaria",true),
+        new Producto ("Pantalon",15000,"indumentaria",true),
+        new Producto ("Zapatillas",40000,"calzado",true),
+        new Producto ("Campera",25000,"indumentaria",true),
+        new Producto ("Buzo",20000,"indumentaria",true),
+    ];
     let continuar = true;
     let comprados = [];
 
-    mientrasStock(productosEnStock, continuar, comprados);
+    continuarCompra(productosEnStock, continuar, comprados);
+}
+
+class Producto {
+    constructor (nombre,precio,categoria,stock){
+        this.nombre = nombre,
+        this.precio = precio,
+        this.categoria = categoria,
+        this.stock = stock
+    }
+
+    descontar(descuento){
+        if(descuento > 0 && descuento < 100){
+        let precioFinal = this.precio * (1 - descuento/100);
+        this.precio = precioFinal
+        }
+    }
 }
 
 //Menu de opciones
@@ -15,7 +37,8 @@ const mostrarMenu = () => {
         "2. Consultar stock\n" +
         "3. Ver productos comprados\n" +
         "4. Eliminar ultimo producto comprado\n" +
-        "5. Salir\n\n" +
+        "5. Aplicar descuento\n" +
+        "6. Salir\n\n" +
         "Ingrese una opcion:"
     ));
 }
@@ -40,7 +63,7 @@ function consultarStock(productosEnStock) {
         return;
     }
     let mensaje = "Productos Disponibles:\n";
-    for(productos of productosEnStock){
+    for(const productos of productosEnStock){
         mensaje += `-${productos}\n`
     }
     alert(mensaje);
@@ -53,7 +76,7 @@ function verComprados(comprados) {
         return;
     }
     let mensaje = "Tu carrito contiene:\n"
-    for(productos of comprados){
+    for(const productos of comprados){
         mensaje += `-${productos}\n`
     }
     alert(mensaje)
@@ -69,8 +92,25 @@ function eliminarUltimoProducto(comprados) {
         alert(`Eliminaste: ${eliminado}`)
 }   
 
+//Aplicar descuento
+function aplicarDescuento(productosEnStock){
+    let buscado = prompt("¿A que producto quiere aplicar su descuento?");
+    let productoBuscado = null;
+    for(const producto of productosEnStock){
+        if(buscado === producto.nombre){
+            productoBuscado = producto;
+        }
+    }
+    if(productoBuscado !== null){
+        productoBuscado.descontar(20)
+        alert(productoBuscado.precio)
+    }   else{
+        alert("El producto ingresado no existe o no queda stock.")
+    }
+}
+
 //Funcion principal
-function mientrasStock(productosEnStock, continuar, comprados) {
+function continuarCompra(productosEnStock, continuar, comprados) {
 
     while (productosEnStock.length > 0 && continuar){
 
@@ -94,6 +134,9 @@ function mientrasStock(productosEnStock, continuar, comprados) {
         break;
 
         case 5:
+            aplicarDescuento(productosEnStock);
+
+        case 6:
             continuar = false;
             alert("Gracias por su compra.")
         break;
@@ -103,7 +146,7 @@ function mientrasStock(productosEnStock, continuar, comprados) {
         break;
         }
     }
-    if (productosEnStock.lenght === 0){
+    if (productosEnStock.length === 0){
         alert("Se agotaron los productos.")
     }
 }
