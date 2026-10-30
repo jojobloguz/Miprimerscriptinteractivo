@@ -13,18 +13,21 @@ function iniciarPrograma() {
     continuarCompra(productosEnStock, continuar, comprados);
 }
 
+//Clase nuevos productos (objetos)
 class Producto {
     constructor (nombre,precio,categoria,stock){
         this.nombre = nombre,
         this.precio = precio,
         this.categoria = categoria,
-        this.stock = stock
+        this.stock = stock,
+        this.descuentoAplicado = false
     }
 
     descontar(descuento){
-        if(descuento > 0 && descuento < 100){
+        if(descuento > 0 && descuento < 100 && this.descuentoAplicado === false){
         let precioFinal = this.precio * (1 - descuento/100);
-        this.precio = precioFinal
+        this.precio = precioFinal;
+        this.descuentoAplicado = true;
         }
     }
 }
@@ -45,15 +48,32 @@ const mostrarMenu = () => {
 
 //Comprar productos
 function comprarProducto(productosEnStock, comprados) {
-    let buscado = prompt("¿Que producto desea comprar?")
-    if (productosEnStock.includes(buscado)){
-        const posicion = (productosEnStock.indexOf(buscado));
-        let productoComprado = productosEnStock.splice(posicion, 1)[0];
-        comprados.push(productoComprado);
-        alert(`Compraste: ${productoComprado}`)
-    }   else{
-        alert('El producto no se encuentra en stock o esta agotado.')
+    if(productosEnStock.length === 0) {
+    alert("No quedan productos en stock.")
+    return;
     }
+
+    let buscado = prompt("¿Que producto desea comprar?")
+    let productoComprado = null;
+    for(const producto of productosEnStock ){
+        if(buscado === producto.nombre){
+            productoComprado = producto;
+            const posicion = productosEnStock.indexOf(producto)
+            productoComprado = productosEnStock.splice(posicion,1)[0]
+        }
+    }
+
+    if(productoComprado !== null){
+        comprados.push(productoComprado);
+        alert(`Compraste: ${productoComprado.nombre}`)
+    }   else {
+        alert('El producto no se encuentra en stock o esta agotado.')
+        }
+
+    if(productosEnStock.length === 0) {
+        alert("No quedan productos en stock.")
+    }
+    
 }
 
 //Consultar stock
@@ -63,8 +83,8 @@ function consultarStock(productosEnStock) {
         return;
     }
     let mensaje = "Productos Disponibles:\n";
-    for(const productos of productosEnStock){
-        mensaje += `-${productos}\n`
+    for(const producto of productosEnStock){
+        mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`
     }
     alert(mensaje);
 }
@@ -76,8 +96,8 @@ function verComprados(comprados) {
         return;
     }
     let mensaje = "Tu carrito contiene:\n"
-    for(const productos of comprados){
-        mensaje += `-${productos}\n`
+    for(const producto of comprados){
+        mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`
     }
     alert(mensaje)
 }
@@ -89,7 +109,7 @@ function eliminarUltimoProducto(comprados) {
         return;
     }
     let eliminado = comprados.pop();
-        alert(`Eliminaste: ${eliminado}`)
+        alert(`Eliminaste: ${eliminado.nombre}`)
 }   
 
 //Aplicar descuento
@@ -101,18 +121,18 @@ function aplicarDescuento(productosEnStock){
             productoBuscado = producto;
         }
     }
-    if(productoBuscado !== null){
+    if(productoBuscado !== null && productoBuscado.descuentoAplicado === false){
         productoBuscado.descontar(20)
-        alert(productoBuscado.precio)
+        alert("Descuento aplicado. Nuevo precio: $" + productoBuscado.precio)
     }   else{
-        alert("El producto ingresado no existe o no queda stock.")
+        alert("El producto ingresado no existe o ya se aplico un descuento.")
     }
 }
 
 //Funcion principal
 function continuarCompra(productosEnStock, continuar, comprados) {
 
-    while (productosEnStock.length > 0 && continuar){
+    while (continuar){
 
     let opcion = mostrarMenu();
 
@@ -135,7 +155,8 @@ function continuarCompra(productosEnStock, continuar, comprados) {
 
         case 5:
             aplicarDescuento(productosEnStock);
-
+        break;
+        
         case 6:
             continuar = false;
             alert("Gracias por su compra.")
@@ -145,9 +166,6 @@ function continuarCompra(productosEnStock, continuar, comprados) {
             alert("Opcion invalida.");
         break;
         }
-    }
-    if (productosEnStock.length === 0){
-        alert("Se agotaron los productos.")
     }
 }
 
