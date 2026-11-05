@@ -39,13 +39,13 @@ function comprarProducto(productosEnStock, comprados) {
 
     let buscado = prompt("¿Que producto desea comprar?")
     let productoComprado = null;
-    for(const producto of productosEnStock ){
-        if(buscado === producto.nombre){
-            productoComprado = producto;
-            const posicion = productosEnStock.indexOf(producto)
+    let productoBuscado = productosEnStock.find((producto) => producto.nombre == buscado)
+        if(productoBuscado !== undefined){
+            productoComprado = productoBuscado;
+            const posicion = productosEnStock.indexOf(productoComprado)
             productoComprado = productosEnStock.splice(posicion,1)[0]
         }
-    }
+    
 
     if(productoComprado !== null){
         comprados.push(productoComprado);
@@ -67,9 +67,7 @@ function consultarStock(productosEnStock) {
         return;
     }
     let mensaje = "Productos Disponibles:\n";
-    for(const producto of productosEnStock){
-        mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`
-    }
+    productosEnStock.forEach((producto) => mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`) 
     alert(mensaje);
 }
 
@@ -80,20 +78,23 @@ function verComprados(comprados) {
         return;
     }
     let mensaje = "Tu carrito contiene:\n"
-    for(const producto of comprados){
-        mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`
-    }
-    alert(mensaje)
+
+    const total = comprados.reduce((acumulador, producto) => acumulador + producto.precio, 0);
+
+    comprados.forEach((producto) => mensaje += `-${producto.nombre} - ${producto.precio} - ${producto.categoria}\n`) 
+
+    alert(mensaje + "Total: $" + total);
 }
 
 //Eliminar ultimo producto
 function eliminarUltimoProducto(comprados) {
     if(comprados.length === 0){
-        alert("Tu carrito esta vacio.")
+        alert("Tu carrito esta vacio.");
         return;
     }
     let eliminado = comprados.pop();
-        alert(`Eliminaste: ${eliminado.nombre}`)
+    productosEnStock.push(eliminado)
+        alert(`Eliminaste: ${eliminado.nombre}`);
 }   
 
 //Aplicar descuento
@@ -106,10 +107,10 @@ function aplicarDescuento(productosEnStock){
         }
     }
     if(productoBuscado !== null && productoBuscado.descuentoAplicado === false){
-        productoBuscado.descontar(20)
-        alert("Descuento aplicado. Nuevo precio: $" + productoBuscado.precio)
+        productoBuscado.descontar(20);
+        alert("Descuento aplicado. Nuevo precio: $" + productoBuscado.precio);
     }   else{
-        alert("El producto ingresado no existe o ya se aplico un descuento.")
+        alert("El producto ingresado no existe o ya se aplico un descuento.");
     }
 }
 
