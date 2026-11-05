@@ -22,7 +22,7 @@ El programa comienza con un catálogo de productos que incluye nombre, precio, c
 - Constructores (`constructor`)
 - Métodos de clase
 - Arrays
-- Métodos de arrays (`push()`, `pop()`, `splice()`, `indexOf()`)
+- Métodos de arrays (`push()`, `pop()`, `splice()`, `indexOf()`, `find()`, `forEach()`, `reduce()`)
 - Ciclos (`while`, `for...of`)
 - Condicionales (`if`, `else`, `else if`)
 - Estructura `switch...case`
