@@ -1,18 +1,3 @@
-//Funcion de inicio
-function iniciarPrograma() {
-    const productosEnStock = [
-        new Producto ("Remera",10000,"indumentaria",true),
-        new Producto ("Pantalon",15000,"indumentaria",true),
-        new Producto ("Zapatillas",40000,"calzado",true),
-        new Producto ("Campera",25000,"indumentaria",true),
-        new Producto ("Buzo",20000,"indumentaria",true),
-    ];
-    let continuar = true;
-    let comprados = [];
-
-    continuarCompra(productosEnStock, continuar, comprados);
-}
-
 //Clase nuevos productos (objetos)
 class Producto {
     constructor (nombre,precio,categoria,stock){
@@ -32,19 +17,18 @@ class Producto {
     }
 }
 
-//Menu de opciones
-const mostrarMenu = () => {
-    return parseInt(prompt(
-        "Menu\n" +
-        "1. Comprar productos\n" +
-        "2. Consultar stock\n" +
-        "3. Ver productos comprados\n" +
-        "4. Eliminar ultimo producto comprado\n" +
-        "5. Aplicar descuento\n" +
-        "6. Salir\n\n" +
-        "Ingrese una opcion:"
-    ));
-}
+//Array de productos
+const productosEnStock = [
+    new Producto ("Remera",10000,"indumentaria",true),
+    new Producto ("Pantalon",15000,"indumentaria",true),
+    new Producto ("Zapatillas",40000,"calzado",true),
+    new Producto ("Campera",25000,"indumentaria",true),
+    new Producto ("Buzo",20000,"indumentaria",true),
+];
+
+//Variables globales para continuar compra y para el carrito
+let continuar = true;
+let comprados = [];
 
 //Comprar productos
 function comprarProducto(productosEnStock, comprados) {
@@ -130,11 +114,20 @@ function aplicarDescuento(productosEnStock){
 }
 
 //Funcion principal
-function continuarCompra(productosEnStock, continuar, comprados) {
+function continuarCompra() {
 
     while (continuar){
 
-    let opcion = mostrarMenu();
+    let opcion = parseInt(prompt(
+        "Menu\n" +
+        "1. Comprar productos\n" +
+        "2. Consultar stock\n" +
+        "3. Ver productos comprados\n" +
+        "4. Eliminar ultimo producto comprado\n" +
+        "5. Aplicar descuento\n" +
+        "6. Salir\n\n" +
+        "Ingrese una opcion:"
+    ));
 
     switch (opcion){
         case 1:
@@ -169,5 +162,5 @@ function continuarCompra(productosEnStock, continuar, comprados) {
     }
 }
 
-iniciarPrograma();
+continuarCompra();
 
