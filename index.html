@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css">
     <!-- JS -->
-    <script defer src="./js/main.js"></script>
+    <script defer src="./js/nuevomain.js"></script>
     <title>Mi primer script interactivo</title>
 </head>
 <body>
-    
+    <h1>Mi tienda online</h1>
+    <div class="contenedor">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Ej: Remera">
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" placeholder="Ej: 10000">
+        <button type="button" id="agregar">Agregar</button>
+    </div>
+
+    <div id="productosDisponibles">
+        <h2>Productos Disponibles</h2>
+    </div>
+
+    <div id="carrito">
+        <h2>Carrito</h2>
+    </div>
 </body>
 </html>
