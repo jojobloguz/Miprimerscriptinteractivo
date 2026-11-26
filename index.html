@@ -12,19 +12,21 @@
 <body>
     <h1>Mi tienda online</h1>
     <div class="contenedor">
+        <label for="id">ID:</label>
+        <input type="number" id="id" placeholder="Ej: 1">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" placeholder="Ej: Remera">
         <label for="precio">Precio:</label>
         <input type="number" id="precio" placeholder="Ej: 10000">
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" placeholder="Ej: Indumentaria">
         <button type="button" id="agregar">Agregar</button>
     </div>
 
-    <div id="productosDisponibles">
-        <h2>Productos Disponibles</h2>
-    </div>
-
-    <div id="carrito">
-        <h2>Carrito</h2>
-    </div>
+    <h2>Productos Disponibles</h2>
+    <div id="productosDisponibles"></div>
+        
+    <h2>Carrito</h2>
+    <div id="carrito"></div>
 </body>
 </html>

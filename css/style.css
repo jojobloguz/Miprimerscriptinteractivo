@@ -6,9 +6,15 @@ body {
   padding: 24px;
 }
 
-h1 { color: #3b5bdb; }
+h1 { 
+  color: #3b5bdb; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
-.btn {
+#agregar {
   background: #3b5bdb;
   color: white;
   border: none;
@@ -16,12 +22,8 @@ h1 { color: #3b5bdb; }
   border-radius: 6px;
   cursor: pointer;
 }
-/*
-.contenedor {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+
+#agregar:hover {
+  background: #2a4bb7;
 }
-*/
 
