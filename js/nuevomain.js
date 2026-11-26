@@ -53,7 +53,7 @@ function mostrarProductos(){
         contenedor.className ="card"
         contenedor.innerHTML = `<span>ID: ${producto.id}</span>
                                 <h3>Producto: ${producto.nombre}</h3>
-                                <h4>Precio: ${producto.precio}</h4>
+                                <h4>Precio: $ ${producto.precio}</h4>
                                 <h5>Categoria: ${producto.categoria}</h5>
                                 <button>Comprar</button>`
         let botonComprar = contenedor.querySelector("button")
@@ -86,7 +86,7 @@ function mostrarCarrito(){
         contenedor.className ="card"
         contenedor.innerHTML = `<span>ID: ${producto.id}</span>
                                 <h3>Producto: ${producto.nombre}</h3>
-                                <h4>Precio: ${producto.precio}</h4>
+                                <h4>Precio: $ ${producto.precio}</h4>
                                 <h5>Categoria: ${producto.categoria}</h5>
                                 <button>Eliminar</button>`
         let botonEliminar = contenedor.querySelector("button")
